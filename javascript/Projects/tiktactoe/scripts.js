@@ -3,6 +3,7 @@ const GameBoard = (() => {
     let gameGrid = document.querySelector('#game-grid')
     let gameState = 'X'
     let moveCounter = 0
+    let gameWinner = null
     // * there is something about this that connects the values; updating one value updates all in the column
     // let gameArray = new Array(3).fill(new Array(3).fill(0)) 
     // * initializing this way does not result in the error with array and fill 
@@ -13,6 +14,7 @@ const GameBoard = (() => {
         gameArray = [[null, null, null],[null, null, null],[null, null, null]] 
         // gameArray = new Array(3).fill([new Array(3).fill(0)])
         moveCounter = 0
+        gameWinner = null
         gameState = 'X'
     })
 
@@ -83,19 +85,10 @@ const GameBoard = (() => {
 
     const selectWinner = (winner = 'tie') => {
         console.log(winner, 'is the winner')
-        // todo end the game, don't allow any more turns
-        squares = document.querySelectorAll('.gameSquare')
-        // console.log(squares)
-        for (x of squares){
-            x.addEventListener('click', (e) => {
-                e.stopPropagation();
-                e.preventDefault();
-            }, true)
-        }
+        gameWinner = winner
     }
     
     // display grid
-    // todo separate into create grid and update grid which would only update innerhtml instead of deleting and recreating the entire grid again
     const displayGrid = (() => {
         deleteGrid()
         for(let x = 0; x < gameArray.length; x++){
@@ -104,14 +97,17 @@ const GameBoard = (() => {
                 elem.className = 'gameSquare'
                 elem.id = `${x},${y}`
                 elem.innerHTML = gameArray[x][y]
-                elem.addEventListener('click', (e) => {
-                    if(gameArray[x][y] == null){
-                        gameArray[x][y] = gameState
-                        switchGameState()
-                        displayGrid()
-                        if(moveCounter >= 5) checkWinCon()
-                    }
-                }, true)
+                // only add event listener if there is no winner
+                if(gameWinner == null){
+                    elem.addEventListener('click', (e) => {
+                        if(gameArray[x][y] == null){
+                            gameArray[x][y] = gameState
+                            switchGameState()
+                            if(moveCounter >= 5) checkWinCon()
+                            displayGrid()
+                        }
+                    }, true)
+                }
                 gameGrid.appendChild(elem)
             }
         }
@@ -130,8 +126,8 @@ document.querySelector('#new-game-button').addEventListener('click', (e) => {
     GameBoard.displayGrid()
 })
 
-
 GameBoard.displayGrid()
 
-// todo find a way to only check solutions that between turns 5 and 9 ( 5 turns is earliest win)
-// todo stop game after win
+
+// todo display whose turn it is
+// todo display winner
