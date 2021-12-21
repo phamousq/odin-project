@@ -84,6 +84,14 @@ const GameBoard = (() => {
     const selectWinner = (winner = 'tie') => {
         console.log(winner, 'is the winner')
         // todo end the game, don't allow any more turns
+        squares = document.querySelectorAll('.gameSquare')
+        // console.log(squares)
+        for (x of squares){
+            x.addEventListener('click', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+            }, true)
+        }
     }
     
     // display grid
@@ -101,7 +109,7 @@ const GameBoard = (() => {
                         gameArray[x][y] = gameState
                         switchGameState()
                         displayGrid()
-                        checkWinCon()
+                        if(moveCounter >= 5) checkWinCon()
                     }
                 }, true)
                 gameGrid.appendChild(elem)

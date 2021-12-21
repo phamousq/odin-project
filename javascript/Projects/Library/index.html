@@ -1,20 +1,37 @@
 <!DOCTYPE html>
 <html lang="en-US">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Library</title>
-  <script type="text/javascript" src="script.js"></script>
-</head>
-<body>
-  <h1>Library</h1>
-  <button>Yes</button>
-  <h2>list of books</h2>
-  <ul id="show-books"></ul>
-  <ul>
-    <li>hi</li>
-    <li>hi</li>
-  </ul>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library</title>
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <h1>Library</h1>
+    
+    <!-- <button id='open-button' onclick="UI.openForm()">Add Book</button> -->
+    <div class="form-popup" id="myForm">
+      <form class="form-container"  id="book-form">
+        <label for="title">Book Title: </label>
+        <input type="text" placeholder="Book Title" name="title" id="bookTitle" required>
+        
+        <label for="author">Author: </label>
+        <input type="text" placeholder="Author" name="author" id="bookAuthor"required>
+        
+        <label for="pages">Pages: </label>
+        <input type="text" name="pages" placeholder="Total # Pages" id="bookPages" required>
+        <div style="padding-bottom: 7px;">
+          <label for="read" onclick="">Completed?</label>
+          <input type="checkbox" name="read" id="bookRead">
+        </div> 
+        
+        <button type="submit" class="btn" id="submit-button">Add To Library</button>
+        <!-- <button type="" class="btn" onclddick="UI.closeForm()" id='close-button'>Close</button> -->
+        <h2>Your Bookshelf</h2>
+        <div id="books-list"></div>
+      </form>
+    </div>
+  </body>
 </html>
