@@ -45,7 +45,6 @@ const GameBoard = (() => {
             }
         }
         // vertical win condition
-        // create new array for each col
         for(let x = 0; x < 3; x++){
             const test = []
             for(let y = 0; y < 3; y++){
@@ -59,16 +58,6 @@ const GameBoard = (() => {
             }
         }
 
-        // win cons
-        // for(let x = 0; x > 3; x++){
-        //     // vertical win con: 0,0 - 1,0 - 2,0
-        //     if (gameArray[x][0] == gameArray[x][1] && gameArray[x][1] == gameArray[x][2] && gameArray[x][0] == gameArray[x][2] && gameArray[x][0] != null){
-        //         return selectWinner(gameArray[x][0])
-        //     // horizontal win con: 0,0 - 0,1 - 0,2
-        //     } else if (gameArray[0][x] == gameArray[1][x] && gameArray[1][x] == gameArray[2][x] && gameArray[0][x] == gameArray[2][x] && gameArray[0][x] != null){
-        //         return selectWinner(gameArray[0][x])
-        //     }
-        // }
         // diagonal win con
         if (gameArray[0][0] == gameArray[1][1] && gameArray[1][1] == gameArray[2][2] && gameArray[0][0] == gameArray[2][2] && gameArray[0][0] != null){
             return selectWinner(gameArray[1][1])
@@ -80,7 +69,6 @@ const GameBoard = (() => {
         else if (moveCounter > 8){
             return selectWinner()
         }
-        // console.log('still no winner')
     }
 
     const selectWinner = (winner = 'tie') => {
@@ -128,6 +116,9 @@ document.querySelector('#new-game-button').addEventListener('click', (e) => {
 
 GameBoard.displayGrid()
 
-
+// ! UI TODOS
 // todo display whose turn it is
 // todo display winner
+
+// ! STYLING TODOS
+// todo add more distinction to when a player chooses a block
