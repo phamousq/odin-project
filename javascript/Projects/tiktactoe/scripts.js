@@ -21,17 +21,6 @@ const GameBoard = (() => {
         }
     }
 
-    const switchGameState = () => {
-        if (gameWinner == null){
-            moveCounter++
-            if (gameState != 'X'){
-                gameState = 'X'
-            } else {
-                gameState = 'O'
-            }
-        }
-    }
-
     const checkWinCon = () => {
         // horizontal win condition
         for(const x of gameArray){
@@ -62,16 +51,25 @@ const GameBoard = (() => {
             return selectWinner(gameArray[1][1])
         }
 
-        // no winner still under turns
+        // tie game
         else if (moveCounter > 8){
             return selectWinner()
         }
+        moveCounter++
+            if (gameState != 'X'){
+                gameState = 'X'
+            } else {
+                gameState = 'O'
+            }
     }
 
     const selectWinner = (winner = 'tie') => {
-        // console.log(winner, 'is the winner')
         gameWinner = winner
-        playerTurn.innerHTML = `${gameState} is the WINNER!`
+        if (winner == 'tie'){
+            playerTurn.innerHTML = `TIE GAME!!!`
+        } else {
+            playerTurn.innerHTML = `${gameWinner} is the WINNER!`
+        }
     }
     
     // display grid
@@ -89,9 +87,9 @@ const GameBoard = (() => {
                     elem.addEventListener('click', (e) => {
                         if(gameArray[x][y] == null){
                             gameArray[x][y] = gameState
-                            if(moveCounter >= 4) checkWinCon()
+                            // if(moveCounter >= 4) 
+                            checkWinCon()
                             displayGrid()
-                            switchGameState()
                         }
                     }, true)
                 }
@@ -99,7 +97,7 @@ const GameBoard = (() => {
             }
         }
     })
-    return {resetGrid, displayGrid, gameArray, switchGameState, gameState}
+    return {resetGrid, displayGrid, gameArray, gameState}
 })()
 
 const Player = (name) => {
