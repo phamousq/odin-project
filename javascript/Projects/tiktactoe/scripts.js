@@ -1,37 +1,34 @@
 // ! Factories and Methods
 const GameBoard = (() => {
     let gameGrid = document.querySelector('#game-grid')
+    let playerTurn = document.querySelector('#player-turn')
     let gameState = 'X'
     let moveCounter = 0
     let gameWinner = null
-    // * there is something about this that connects the values; updating one value updates all in the column
-    // let gameArray = new Array(3).fill(new Array(3).fill(0)) 
-    // * initializing this way does not result in the error with array and fill 
     let gameArray = [[null, null, null],[null, null, null],[null, null, null]] 
     
     // reset grid
     const resetGrid = (() => {
         gameArray = [[null, null, null],[null, null, null],[null, null, null]] 
-        // gameArray = new Array(3).fill([new Array(3).fill(0)])
         moveCounter = 0
         gameWinner = null
         gameState = 'X'
     })
 
     const deleteGrid = (x = undefined, y = undefined) => {
-        // delete entire grid
         while(gameGrid.firstElementChild){
             gameGrid.removeChild(gameGrid.firstChild)
         }
     }
 
     const switchGameState = () => {
-        moveCounter++
-        // console.log(moveCounter)
-        if (gameState != 'X'){
-            gameState = 'X'
-        } else {
-            gameState = 'O'
+        if (gameWinner == null){
+            moveCounter++
+            if (gameState != 'X'){
+                gameState = 'X'
+            } else {
+                gameState = 'O'
+            }
         }
     }
 
@@ -39,9 +36,9 @@ const GameBoard = (() => {
         // horizontal win condition
         for(const x of gameArray){
             if(x.filter(y => y == 'X').length == 3){
-                return selectWinner('X')
+                return selectWinner(gameState)
             } else if(x.filter(y => y == 'O').length == 3){
-                return selectWinner('O')
+                return selectWinner(gameState)
             }
         }
         // vertical win condition
@@ -72,8 +69,9 @@ const GameBoard = (() => {
     }
 
     const selectWinner = (winner = 'tie') => {
-        console.log(winner, 'is the winner')
+        // console.log(winner, 'is the winner')
         gameWinner = winner
+        playerTurn.innerHTML = `${gameState} is the WINNER!`
     }
     
     // display grid
@@ -87,12 +85,13 @@ const GameBoard = (() => {
                 elem.innerHTML = gameArray[x][y]
                 // only add event listener if there is no winner
                 if(gameWinner == null){
+                    playerTurn.innerHTML = `${gameState}'s turn to go`
                     elem.addEventListener('click', (e) => {
                         if(gameArray[x][y] == null){
                             gameArray[x][y] = gameState
-                            switchGameState()
-                            if(moveCounter >= 5) checkWinCon()
+                            if(moveCounter >= 4) checkWinCon()
                             displayGrid()
+                            switchGameState()
                         }
                     }, true)
                 }
@@ -115,10 +114,3 @@ document.querySelector('#new-game-button').addEventListener('click', (e) => {
 })
 
 GameBoard.displayGrid()
-
-// ! UI TODOS
-// todo display whose turn it is
-// todo display winner
-
-// ! STYLING TODOS
-// todo add more distinction to when a player chooses a block
