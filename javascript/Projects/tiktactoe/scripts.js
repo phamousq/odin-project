@@ -52,7 +52,7 @@ const GameBoard = (() => {
         }
 
         // tie game
-        else if (moveCounter > 8){
+        else if (moveCounter >= 8){
             return selectWinner()
         }
         moveCounter++
@@ -64,6 +64,7 @@ const GameBoard = (() => {
     }
 
     const selectWinner = (winner = 'tie') => {
+        playerTurn.innerHTML == ''
         gameWinner = winner
         if (winner == 'tie'){
             playerTurn.innerHTML = `TIE GAME!!!`
@@ -99,10 +100,6 @@ const GameBoard = (() => {
     })
     return {resetGrid, displayGrid, gameArray, gameState}
 })()
-
-const Player = (name) => {
-    // todo add player functionality
-}
 
 // ! Event Listeners
 // new game button
